@@ -1,0 +1,261 @@
+\input{header.tex}
+
+\usepackage{graphicx}
+\usepackage{epstopdf}
+
+
+\title{PHYS3051 Optical Time-Domain Refletometry}
+\author{Blake Petersen 42643386 \\ 
+	\small{with Natalie Eir\'{e} 
+	and Samuel Hinton}}
+\date{13 May 2014}
+\begin{document}
+\maketitle 
+
+\begin{abstract}
+We successfully utilized optical time domain reflectometry to determine the length of an optical fibre along with the location and characteristics of defects in the fibre, along with characteristics of the fibre itself. This data was also used provide a lower estimate of the effective reflectivity of the boundary between the optic fibre core and cladding.
+We determined the total length of the fibre to be $5.0 \pm 0.1 \times 10^{2} \,\text{m}$, with the splice in the fibre being $4.0 \pm 0.1 \times 10^{2} \,\text{m}$ from the microscope objective.
+Total attenuation coefficient of the fibre was $1.561 \pm 0.001 \times 10^{-4}\, \text{Np m}^{-1}$, and the relative power lost by a splice in the fibre to be $-2.87 \pm 0.01 \times 10^{-2}\,\text{Np}$.
+With these values an a ray optic approximation, we were also able to put a lower limit on the relative power loss of the core/cladding boundary of
+$-1.0927 \pm 0.0001 \times 10^{-7} \text{Np}$ per reflection, 
+corresponding to a reflectivity of $R = 9.99999891 \times 10^{-1} \pm 9 \times 10^{-12}$ for the surface.
+\end{abstract}
+
+\section{Introduction}
+Fresnel reflections are the process by which someone has the ability to see themselves in a clear window, while Rayleigh scattering is responsible for the colour of the sky. Optical Time Domain Reflectometry (OTDR) relies on both of these phenomena to determine many properties about a length of optical fibre simply by focusing light down it.
+
+The aim of this experiment is to use OTDR to determine the total length of a roll of optical fibre, the location of any faults in the fibre such as the fibre splice, the attenuation of the signal as it passes through the optic fibre, the amount of energy lost to the splice, and provide a lower estimate of the effective reflectivity of the boundary between the optic fibre core and cladding.
+
+\section{Theory}
+\subsection{Attenuation and Defect Power Loss}
+The signal due to Rayleigh backscattering is given by:
+\begin{align}
+	P(t) = \frac{1}{2} E_0 S a_s v e ^{-a v t}
+	\label{eq:rscatter}
+\end{align}
+Where $E_0$ is the energy of the initial pulse,
+$S$ is the fraction of backscattered light,
+$a_s$ is the fibre loss due to scattering,
+$v$ is the velocity of light in the fibre, and
+$a$ is the total attenuation coefficient.\cite{supnotes}
+
+A linear regression of this scattering can therefore be found by taking the logarithm equation \eqref{eq:rscatter}. 
+This enables us to determine the attenuation coefficient of the fibre from the gradient of the line of best fit.
+\begin{align}
+	\ln\left(P(t)\right) = -a vt + \ln \left(\frac{1}{2} E_0 S a_s v \right)
+	\label{eq:regression}
+\end{align}
+This also allows us to determine the proportion of energy lost to the splice or any other defects in the fibre. If a linear regression is performed before and after a discontinuity in the Rayleigh scattering, the difference between the y-intercept of the lines of best fit directly provides the drop in power:
+\begin{align}
+	\ln \left(\frac{1}{2} E_1 S a_s v \right) - \ln \left(\frac{1}{2} E_0 S a_s v \right) = \ln\left( \frac{E_1}{E_0}\right)
+	\label{eq:powerloss}
+\end{align}
+
+\subsection{Points of Reflection}
+% prediction of reflection points.
+We can predict where when reflections from artefacts in the fibre should occur.
+Firstly, light will travel slower in the optical fibre core than it does in free space. Using the definition of the refractive index:
+\begin{align}
+	v_{\text{core}} = \frac{c_0}{n_{\text{core}}} 
+	\label{eq:velocity}
+\end{align}
+With $n_{\text{core}} = 1.46$, $v_{\text{core}} = 2.053 \times 10^8 \,\text{m s}^{-1}$.
+The time it should take to register light reflected from the far end
+should be twice the time it takes to reach the end of the fibre.
+So, for a fibre $500$m long:
+\begin{align*}
+	t_{\text{end}} &= 2\cdot \frac{500 \text{m}}{v_{\text{core}}}	\\
+		&= 4.87 \mu\text{s}
+\end{align*}
+There should also be a reflection from the splice in the fibre. Given that it should be located $100$m from the beginning of the fibre:
+\begin{align*}
+	t_{\text{splice}} &= 2\cdot \frac{100 \text{m}}{v_{\text{core}}}	\\
+		&= 0.97 \mu\text{s}
+\end{align*}
+
+\subsection{Reflectivity Estimate}
+The size of the multimode optical fibre core allows us to make use of a ray approximation in order to estimate the reflectivity of the core/cladding boundary.
+Using Snell's law a formula for the critical angle of incidence for the boundary can be calculated.
+\begin{align*}
+	n_1 \sin(\theta_1) &= n_2 \sin(\theta_2)	\\
+	\theta_\text{critical} &= \sin^{-1}\left(\frac{n_{\text{cladding}}}{n_{\text{core}}}\right)
+\end{align*}
+
+Given that for $n_\text{core} = 1.46$ and $n_\text{cladding} = 1.445$, the critical angle of incidence for the fibre core is $81.8^{\circ}$, so I have approximated the typical angle of incidence as $86^{\circ}$ to the normal. With a typical multimode fibre core width of $50\times 10^{-6}\text{m}$, a ray of light will reflect from the fibre cladding approximately 
+$1.4 \pm 0.7 \times 10^{5}$ times in $100\text{m}$,
+or $7 \pm 6 \times 10^{-4} \, \text{m}$ per reflection.
+After the attenuation coefficient is found, a lower bound estimate for the reflectivity of the boundary can now also be calculated.
+This is only a lower bound estimate because these calculations assume that all of the attenuation in the fibre comes from losses at the boundary due to reflections, neglecting the imaginary component of the wavevectors.
+\section{Method}
+The equipment consisted of a pulse laser diode source, beamsplitter, microscope objective,
+500m of optic fibre, optic fibre splice, and a sensor.
+As the laser in use was class 3B by the Australian standards, appropriate safety goggles were worn and a warning light turned on while the laser was in operation.
+
+%What is the difference between single-mode and multimode optical fibre
+The main difference between single-mode and multi-mode optical fibre is the number
+of frequencies accepted by the fibre due to the size of the core. The larger core of the multi-mode also allows ray optic approximations to be applied.
+Light from the laser diode forms a coherent beam more applicable to carrying information through an optical fibre. It also has a higher efficiency than standard light emitting diodes. \cite{npld}
+
+\paragraph*{}
+% What trick is used to optimise the operation of the beamsplitter
+A few tricks were used to optimise the operation of the beamsplitter.
+Light passing through the beamsplitter becomes polarised, with one polarisation being reflected while the other passes through.
+When the light is reflected it switches polarisation, so the entire reflection intensity is passed to the detector, rather than continuing on back to the source.
+Also, the beamsplitter is set so that no beam will be perpendicular to a wall. This reduces reflections from the wall interfering with the detector.
+
+%How does the F-IRC1 Ifrared sensor card work
+The F-IRC1 Infrared sensor card makes use of a phosphor coated sensor-area in order to make the laser beam visible without the use of more expensive eye wear. \cite{npsensor}
+In phosphorescence electrons are excited to a higher energy state by incident photons corresponding to that energy gap.
+They then transition to a classically forbidden energy state before eventually returning to the ground state.
+This intermediate change in energy state means that the photon emitted when the electron returns to the ground state
+will have a different frequency than the photons absorbed to excite the electron in the first place.
+In this case the phosphor coating absorbs the infra-red laser light and re-emits it with a frequency in the visible spectrum. 
+This card was used to centre the incident beam on the microscope objective.
+The microscope objective was necessary to counteract the spread of the laser dot width and focus the laser beam into the optic fibre. 
+
+\paragraph*{}
+A Tektronix TDS1002B oscilloscope was set to trigger by the laser diode's signal by plugging its output to the EXT input. 
+The detector's output cable was connected to CH1 of the oscilloscope and was lined up so that reflections from the optic fibre through the beam-splitter would be registered.
+Initially the oscilloscope was set to display unaveraged data. This allowed us to adjust the microscope objective to maximise light passing into the fibre by observing how the reflected signal changed.
+This also allowed us to set an appropriate horizontal scale of $1\mu\text{s}$ and a vertical scale of $34.4 \text{mV}$.
+After this, the oscilloscope was set to average the data over 128 measurements.
+Ten datasets were then saved to a USB storage device attached to the oscilloscope, with several seconds passing between each acquisition.
+This amount of data allows the calculation of a standard deviation to be used as an estimate of error.
+
+
+\section{Results and Discussion}
+Uncertainty in the raw data was determined by saving ten datasets from the oscilloscope and calculating the mean and standard deviation at each point in the data. The result of this is displayed in Figure \ref{fig:vt}.
+\begin{figure}[h]
+	\centering
+	\input{volt_time}
+	\caption{\small Response signal as a function of time after pulse emission. 
+	This graph represents data averaged over ten trials, 
+	each consisting of the average of 128 acquisitions. 
+	The first sharp rise to the left of the graph corresponds to light reflected from the microscope objective and optic fibre coupling.
+	The sharp rise to the right of the graph corresponds to Fresnel reflections from the other end of the optic fibre. 
+	The small bump in between those two corresponds to Fresnel reflections from a fibre splice.}
+	\label{fig:vt}
+\end{figure}
+
+% determine with uncertainty
+\paragraph*{}
+% lengths of the two sections of fibre
+To determine when the reflected pulses are actually detected I have taken the time of reflection to be at the centre of the half-maximum band of the peak.
+Uncertainty in these times were determined by combining the difference between the time of maximum value and the centre of the half-maximum width, with the duration of the laser pulse using the following:
+\begin{align*}
+	\Delta p = \sqrt{(\Delta x)^2 + (\Delta y)^2}
+\end{align*}
+In all cases the duration of the pulse dominated uncertainty calculations.
+This results in the following locations of the peaks.
+
+First peak: $0.1 \pm 0.1 \times 10^{-6} \mu\text{s}$
+
+Second peak: $4.0 \pm 0.1 \times 10^{-6}\mu\text{s}$
+
+Last peak: $5.0 \pm 0.1 \times 10^{-6}\mu\text{s}$ 
+\paragraph*{}
+As the first peak represents light reflected off of the microscope objective and the beginning of the optical fibre, the other peaks must be reduced by this amount when determining their spatial position in the fibre.
+After this adjustment, the last peak well matches our estimate for the time reflections from the end of the fibre would be registered.
+The second peak does not match our prediction for the splice, 
+however, it does match if the splice were located $100$m from the far end of the fibre, rather than the launch end.
+
+Taking into account the speed of light in the fibre given by \eqref{eq:velocity} and that the light pulse travels twice the distance in this time,
+the total length of the fibre comes to $5.0 \pm 0.1 \times 10^{2} \,\text{m}$.
+A similar process for the second peak gives a splice distance of
+$4.0 \pm 0.1 \times 10^{2} \,\text{m}$, indicating that it is indeed $100$m from the far end of the fibre.
+
+\paragraph*{}
+Since the Rayleigh scattering follows an exponential decay pattern, the logarithm of the mean data and standard error at each point must be taken in order to calculate a linear regression. 
+The error in the data transforming with the following:
+\begin{align*}
+	\Delta p_i = \frac{1}{2.3}
+	\sqrt{ 
+	\left( \frac{\Delta y_i}{y_i} \right) ^2 + 
+	\left( \frac{\Delta y_{\text{ref}}}{y_{\text{ref}}} \right) ^2 }
+\end{align*}
+The reference point was taken to be $1$V, and the reference error as the resolution of the oscilloscope.
+\begin{figure}[h]
+	\centering
+	\input{dB_dist}
+	\caption{\small This graph shows reflections from within the fibre relative to scattering levels after the initial Fresnel reflection peak.
+	The linear regression for Rayleigh scattering before the splice is $f(x) = -1.5690 \pm 0.001 \times 10^{-4} x - 1.9651 \pm 0.0001$.
+	The linear regression for Rayleigh scattering after the splice 
+$f(x) = -1.5023 \pm 0.001 \times 10^{-4} x - 1.9938 \pm 0.0001$.  }
+	\label{fig:relvdist}
+\end{figure}
+This transformed data, along with the error and linear regression are displayed in Figure \ref{fig:relvdist}. A weighted linear least squares regression was used to find the lines of best fit for this dataset. 
+The slope and intercept of these lines can then be used to infer the attenuation of the fibre and the power loss at the splice as was found with equation \eqref{eq:regression}.
+This provides a total attenuation of the fibre along before the splice of
+\begin{align*}
+	a_1 = 1.561 \pm 0.001 \times 10^{-4}\, \text{Np m}^{-1}
+\end{align*}
+and a total attenuation after the splice of
+\begin{align*}
+	a_2 = 1.579 \pm 0.001 \times 10^{-4}\, \text{Np m}^{-1}
+\end{align*}
+These values are of the same order of magnitude smaller than what the supplementary material indicates is a typical value of $6.9 \times 10^{-4} \, \text{Np m}^{-1}$ \cite{supnotes}.
+
+\paragraph*{}
+Since the power loss due to the splice is simply the difference in the y-intercepts between the two lines of best fit before and after the splice.
+This power loss comes to $-2.87 \pm 0.01 \times 10^{-2}\,\text{Np}$.
+The error in this measurement was calculated using the error in the two y-intercept values as follows
+\begin{align*}
+	\Delta p &= \sqrt{(1\times 10^{-4})^2 + (1\times 10^{-4})^2}	\\
+		&= 1.4 \times 10^{-4} \,\text{Np}
+\end{align*}
+
+\paragraph*{}
+% Estimate the number of reflections in 100m
+Given the earlier estimate of $7 \pm 6 \times 10^{-4} \, \text{m}$ per reflection,
+if all of the attenuation is interpreted as losses in these reflections, then the incident signal should be attenuated by $-1.0927 \pm 0.00009 \times 10^{-7} \text{Np}$ per reflection. Error in this value is calculated as follows:
+\begin{align*}
+	\Delta p &= |p| \sqrt{\left(\frac{\Delta x}{x}\right)^2 + \left(\frac{\Delta y}{y}\right)^2}\\
+	&= 1.0927 \times 10^{-7} \sqrt{\left(\frac{6}{7} \times 10^{-4}\right)^2 + \left(\frac{0.001}{1.561} \times 10^{-4}\right)^2}	\\
+	&= 1.0927 \times 10^{-7} \sqrt{7.346 \times 10^{-9} + 4.1039 \times 10^{-17}}	\\
+	&= 9.365 \times 10^{-12} \,\text{Np}	\\
+\end{align*}
+
+Thus, the reflectivity of the core/cladding boundary should be at least
+\begin{align*}
+	R &= e^{-1.0927 \times 10^{-7}}	\\
+		&= 9.99999891 \times 10^{-1} \pm 9 \times 10^{-12}
+\end{align*}
+
+\begin{align*}
+	p &= e^{x}	\\
+	\Delta p &= \pd{e^{x}}{x} \Delta x	\\
+		&= 9 \times 10^{-12}
+\end{align*}
+\section{Conclusions}
+Our data suggests that the total length of the fibre of $5.0 \pm 0.1 \times 10^{2} \,\text{m}$, with the splice in the fibre being $4.0 \pm 0.1 \times 10^{2} \,\text{m}$ from the microscope objective. These values are consistent with the setup, but with the splice at the opposite end to what was specified. This is more likely an error made in the setup, rather than with the method.
+Of note is that the width of Fresnel reflection peaks appear to be the same width as that of the laser pulse duration, so shorter pulse widths should result in more precise distance measurements.
+
+We also determined the total attenuation coefficient of the optic fibre to be $1.561 \pm 0.001 \times 10^{-4}\, \text{Np m}^{-1}$, which is of the same order of magnitude of typical values of multi-mode fibre. With this and a few assumptions were able to put a lower bound on the attenuation per reflection of
+$-1.0927 \pm 0.0001 \times 10^{-7} \text{Np}$, corresponding to a reflectivity of
+$R = 9.99999891 \times 10^{-1} \pm 9 \times 10^{-12}$.
+
+Finally, we were able to determine the severity of defects in the fibre, with the power loss by the splice coming to $-2.87 \pm 0.01 \times 10^{-2}\,\text{Np}$. 
+This demonstrates that optical time-domain reflectometry is a useful tool in determining the length of an optical fibre along with the location and characteristics of defects in the fibre, along with characteristics of the fibre itself.
+
+
+\begin{thebibliography}{9}
+\bibitem{supnotes}
+	Newport,
+	\emph{Newport Educational Kits FKP-11 OTDR Experiment Manual}.
+	
+\bibitem{labnotes}
+	School of Physics and Mathematics,
+	\emph{Optical Time Domain Reflectometer Laboratory Manual}.
+	University of Queensland.
+	
+\bibitem{npld}
+	Newport,
+	\emph{Laser Diode Technology}.
+	url: {https://www.newport.com/Tutorial-Laser-Diode-Technology/852182/1033/content.aspx}
+
+\bibitem{npsensor}
+	Newport,
+	\emph{F-IRC1 Sensor Card}.
+	url: {http://search.newport.com/?x1=sku\&q1=F-IRC1}
+\end{thebibliography}
+\end{document}
